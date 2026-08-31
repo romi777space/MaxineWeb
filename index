@@ -9,6 +9,7 @@
 
 <body>
 
+  <!-- PANTALLA 18+ -->
   <div id="age-screen">
     <div class="age-box">
       <h1>MAXINE</h1>
@@ -17,6 +18,7 @@
     </div>
   </div>
 
+  <!-- ENCABEZADO -->
   <header>
     <div class="logo">MAXINE</div>
 
@@ -28,18 +30,25 @@
     </nav>
   </header>
 
+  <!-- CONTENIDO PRINCIPAL -->
   <main>
 
+    <!-- INICIO -->
     <section id="inicio" class="hero">
       <div class="hero-content">
         <p class="small-title">WELCOME TO</p>
+
         <h1>MAXINE</h1>
+
         <p>Elegancia • Exclusividad • Fantasía</p>
 
-        <a href="#contenido" class="btn">VER CONTENIDO</a>
+        <a href="#contenido" class="btn">
+          VER CONTENIDO
+        </a>
       </div>
     </section>
 
+    <!-- SOBRE MÍ -->
     <section id="sobre" class="section">
       <h2>Sobre mí</h2>
 
@@ -50,40 +59,67 @@
       </p>
     </section>
 
+    <!-- CONTENIDO -->
     <section id="contenido" class="section">
+
       <p class="small-title">EXCLUSIVE CONTENT</p>
+
       <h2>Contenido</h2>
 
       <div class="products">
 
+        <!-- FOTOS -->
         <div class="product">
+
           <div class="product-icon">📸</div>
+
           <h3>FOTOS</h3>
-          <p>Sets exclusivos de fotografías.</p>
 
-          <div class="price">$29.80 USD</div>
+          <p>
+            Sets exclusivos de fotografías.
+          </p>
+
+          <div class="price">
+            $29.80 USD
+          </div>
 
           <button class="buy-btn">
             COMPRAR CON CRYPTO
           </button>
+
         </div>
 
+        <!-- VIDEOS -->
         <div class="product">
-          <div class="product-icon">🎥</div>
-          <h3>VIDEOS</h3>
-          <p>Videos individuales exclusivos.</p>
 
-          <div class="price">$59.90 USD</div>
+          <div class="product-icon">🎥</div>
+
+          <h3>VIDEOS</h3>
+
+          <p>
+            Videos individuales exclusivos.
+          </p>
+
+          <div class="price">
+            $59.90 USD
+          </div>
 
           <button class="buy-btn">
             COMPRAR CON CRYPTO
           </button>
+
         </div>
 
+        <!-- MEMBRESÍA -->
         <div class="product featured">
-          <div class="badge">BEST VALUE</div>
 
-          <div class="product-icon">💎</div>
+          <div class="badge">
+            BEST VALUE
+          </div>
+
+          <div class="product-icon">
+            💎
+          </div>
 
           <h3>2 YEARS</h3>
 
@@ -91,17 +127,23 @@
             Membresía exclusiva durante 2 años.
           </p>
 
-          <div class="price">$179.90 USD</div>
+          <div class="price">
+            $179.90 USD
+          </div>
 
           <button class="buy-btn">
             GET MEMBERSHIP
           </button>
+
         </div>
 
       </div>
+
     </section>
 
+    <!-- CONTACTO -->
     <section id="contacto" class="section">
+
       <h2>Contacto</h2>
 
       <p>
@@ -109,15 +151,25 @@
         utiliza los canales oficiales de Maxine.
       </p>
 
-      <a href="#" class="btn">CONTACTAR</a>
+      <a href="#" class="btn">
+        CONTACTAR
+      </a>
+
     </section>
 
   </main>
 
+  <!-- PIE DE PÁGINA -->
   <footer>
-    <p>© 2026 MAXINE • All Rights Reserved</p>
+    <p>
+      © 2026 MAXINE • All Rights Reserved
+    </p>
   </footer>
 
+  <!-- SUPABASE -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- JAVASCRIPT DE MAXINE -->
   <script src="script.js"></script>
 
 </body>
