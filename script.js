@@ -1,9 +1,6 @@
-
 // ==========================================
-// MAXINE - JAVASCRIPT
+// MAXINE - SUPABASE + AUTENTICACIÓN
 // ==========================================
-
-// ---------- SUPABASE ----------
 
 const SUPABASE_URL = "https://ojkfuxahqnbazojpbhyt.supabase.co";
 
@@ -17,7 +14,7 @@ const supabaseClient = window.supabase.createClient(
 
 
 // ==========================================
-// PANTALLA DE EDAD 18+
+// PANTALLA 18+
 // ==========================================
 
 function enterSite() {
@@ -34,59 +31,262 @@ function enterSite() {
 
 
 // ==========================================
-// COMPROBAR SESIÓN DE USUARIO
+// MENSAJES
 // ==========================================
 
-async function checkSession() {
-  const { data, error } =
-    await supabaseClient.auth.getSession();
+function showMessage(message, success = false) {
+  const element = document.getElementById("auth-message");
 
-  if (error) {
-    console.error(
-      "Error al comprobar la sesión:",
-      error.message
-    );
-    return;
-  }
+  if (!element) return;
 
-  if (data.session) {
-    console.log(
-      "Usuario conectado:",
-      data.session.user.email
-    );
+  element.textContent = message;
+
+  element.style.display = "block";
+
+  if (success) {
+    element.style.color = "lightgreen";
   } else {
-    console.log("No hay ningún usuario conectado.");
+    element.style.color = "#ff5555";
   }
 }
 
 
 // ==========================================
-// ESCUCHAR CAMBIOS DE SESIÓN
+// REGISTRO
 // ==========================================
 
-supabaseClient.auth.onAuthStateChange(
-  (event, session) => {
+async function registerUser(email, password) {
 
-    if (session) {
-      console.log(
-        "Sesión iniciada:",
-        session.user.email
-      );
-    } else {
-      console.log("Sesión cerrada.");
-    }
+  showMessage("Creando cuenta...", true);
+
+  const { data, error } =
+    await supabaseClient.auth.signUp({
+      email: email,
+      password: password
+    });
+
+  if (error) {
+    showMessage(
+      "Error: " + error.message
+    );
+    return;
+  }
+
+  if (data.user && !data.session) {
+
+    showMessage(
+      "Cuenta creada. Revisa tu correo para confirmar tu cuenta.",
+      true
+    );
+
+    return;
+  }
+
+  showMessage(
+    "Cuenta creada correctamente.",
+    true
+  );
+
+  updateUserInterface();
+}
+
+
+// ==========================================
+// INICIO DE SESIÓN
+// ==========================================
+
+async function loginUser(email, password) {
+
+  showMessage("Iniciando sesión...", true);
+
+  const { data, error } =
+    await supabaseClient.auth.signInWithPassword({
+      email: email,
+      password: password
+    });
+
+  if (error) {
+
+    showMessage(
+      "Error: " + error.message
+    );
+
+    return;
+  }
+
+  showMessage(
+    "Sesión iniciada correctamente.",
+    true
+  );
+
+  updateUserInterface();
+}
+
+
+// ==========================================
+// CERRAR SESIÓN
+// ==========================================
+
+async function logout() {
+
+  const { error } =
+    await supabaseClient.auth.signOut();
+
+  if (error) {
+
+    showMessage(
+      "Error al cerrar sesión: " +
+      error.message
+    );
+
+    return;
+  }
+
+  showMessage(
+    "Sesión cerrada.",
+    true
+  );
+
+  updateUserInterface();
+}
+
+
+// ==========================================
+// ACTUALIZAR INTERFAZ
+// ==========================================
+
+async function updateUserInterface() {
+
+  const {
+    data: { session }
+  } = await supabaseClient.auth.getSession();
+
+  const registerBox =
+    document.getElementById("register-box");
+
+  const loginBox =
+    document.getElementById("login-box");
+
+  const userBox =
+    document.getElementById("user-box");
+
+  const userEmail =
+    document.getElementById("user-email");
+
+
+  if (session) {
+
+    if (registerBox)
+      registerBox.style.display = "none";
+
+    if (loginBox)
+      loginBox.style.display = "none";
+
+    if (userBox)
+      userBox.style.display = "block";
+
+    if (userEmail)
+      userEmail.textContent =
+        session.user.email;
+
+  } else {
+
+    if (registerBox)
+      registerBox.style.display = "block";
+
+    if (loginBox)
+      loginBox.style.display = "block";
+
+    if (userBox)
+      userBox.style.display = "none";
 
   }
-);
+}
 
 
 // ==========================================
-// INICIAR PÁGINA
+// FORMULARIO DE REGISTRO
 // ==========================================
 
 document.addEventListener(
   "DOMContentLoaded",
   () => {
-    checkSession();
+
+    const registerForm =
+      document.getElementById("register-form");
+
+    const loginForm =
+      document.getElementById("login-form");
+
+
+    if (registerForm) {
+
+      registerForm.addEventListener(
+        "submit",
+        async (event) => {
+
+          event.preventDefault();
+
+          const email =
+            document.getElementById(
+              "register-email"
+            ).value.trim();
+
+          const password =
+            document.getElementById(
+              "register-password"
+            ).value;
+
+          await registerUser(
+            email,
+            password
+          );
+
+        }
+      );
+
+    }
+
+
+    if (loginForm) {
+
+      loginForm.addEventListener(
+        "submit",
+        async (event) => {
+
+          event.preventDefault();
+
+          const email =
+            document.getElementById(
+              "login-email"
+            ).value.trim();
+
+          const password =
+            document.getElementById(
+              "login-password"
+            ).value;
+
+          await loginUser(
+            email,
+            password
+          );
+
+        }
+      );
+
+    }
+
+
+    // Comprobar usuario existente
+    updateUserInterface();
+
+
+    // Escuchar cambios de sesión
+    supabaseClient.auth.onAuthStateChange(
+      () => {
+        updateUserInterface();
+      }
+    );
+
   }
 );
