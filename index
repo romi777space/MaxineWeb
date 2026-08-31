@@ -26,20 +26,18 @@
       <a href="#inicio">Inicio</a>
       <a href="#sobre">Sobre mí</a>
       <a href="#contenido">Contenido</a>
+      <a href="#cuenta">Mi cuenta</a>
       <a href="#contacto">Contacto</a>
     </nav>
   </header>
 
-  <!-- CONTENIDO PRINCIPAL -->
   <main>
 
     <!-- INICIO -->
     <section id="inicio" class="hero">
       <div class="hero-content">
         <p class="small-title">WELCOME TO</p>
-
         <h1>MAXINE</h1>
-
         <p>Elegancia • Exclusividad • Fantasía</p>
 
         <a href="#contenido" class="btn">
@@ -57,6 +55,93 @@
         Aquí encontrarás contenido privado, fotografías,
         videos y acceso especial a Maxine.
       </p>
+    </section>
+
+    <!-- CUENTA -->
+    <section id="cuenta" class="section">
+
+      <p class="small-title">MEMBERS AREA</p>
+
+      <h2>Mi cuenta</h2>
+
+      <!-- REGISTRO -->
+      <div id="register-box">
+
+        <h3>Crear cuenta</h3>
+
+        <form id="register-form">
+
+          <input
+            type="email"
+            id="register-email"
+            placeholder="Tu correo electrónico"
+            required
+          >
+
+          <input
+            type="password"
+            id="register-password"
+            placeholder="Contraseña"
+            minlength="6"
+            required
+          >
+
+          <button type="submit" class="btn">
+            CREAR CUENTA
+          </button>
+
+        </form>
+
+      </div>
+
+      <!-- INICIO DE SESIÓN -->
+      <div id="login-box">
+
+        <h3>Iniciar sesión</h3>
+
+        <form id="login-form">
+
+          <input
+            type="email"
+            id="login-email"
+            placeholder="Tu correo electrónico"
+            required
+          >
+
+          <input
+            type="password"
+            id="login-password"
+            placeholder="Contraseña"
+            required
+          >
+
+          <button type="submit" class="btn">
+            INICIAR SESIÓN
+          </button>
+
+        </form>
+
+      </div>
+
+      <!-- USUARIO CONECTADO -->
+      <div id="user-box" style="display:none;">
+
+        <h3>Cuenta activa</h3>
+
+        <p id="user-email"></p>
+
+        <button
+          type="button"
+          class="btn"
+          onclick="logout()"
+        >
+          CERRAR SESIÓN
+        </button>
+
+      </div>
+
+      <p id="auth-message"></p>
+
     </section>
 
     <!-- CONTENIDO -->
@@ -159,7 +244,6 @@
 
   </main>
 
-  <!-- PIE DE PÁGINA -->
   <footer>
     <p>
       © 2026 MAXINE • All Rights Reserved
