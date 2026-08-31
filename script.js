@@ -1,10 +1,14 @@
-// ===============================
-// MAXINE - SUPABASE
-// ===============================
+
+// ==========================================
+// MAXINE - JAVASCRIPT
+// ==========================================
+
+// ---------- SUPABASE ----------
 
 const SUPABASE_URL = "https://ojkfuxahqnbazojpbhyt.supabase.co";
 
-const SUPABASE_KEY = "sb_publishable_vGsTTJDXL9Uf5KprBSOC1g_jhzSIKoc";
+const SUPABASE_KEY =
+  "sb_publisible_vGsTTJDXL9Uf5KprBSOC1g_jhzSIKoc";
 
 const supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
@@ -12,9 +16,9 @@ const supabaseClient = window.supabase.createClient(
 );
 
 
-// ===============================
-// PANTALLA 18+
-// ===============================
+// ==========================================
+// PANTALLA DE EDAD 18+
+// ==========================================
 
 function enterSite() {
   const ageScreen = document.getElementById("age-screen");
@@ -29,30 +33,60 @@ function enterSite() {
 }
 
 
-// ===============================
-// COMPROBAR SESIÓN
-// ===============================
+// ==========================================
+// COMPROBAR SESIÓN DE USUARIO
+// ==========================================
 
 async function checkSession() {
-  const { data, error } = await supabaseClient.auth.getSession();
+  const { data, error } =
+    await supabaseClient.auth.getSession();
 
   if (error) {
-    console.error("Error al comprobar sesión:", error);
+    console.error(
+      "Error al comprobar la sesión:",
+      error.message
+    );
     return;
   }
 
   if (data.session) {
-    console.log("Usuario conectado:", data.session.user.email);
+    console.log(
+      "Usuario conectado:",
+      data.session.user.email
+    );
   } else {
-    console.log("No hay usuario conectado.");
+    console.log("No hay ningún usuario conectado.");
   }
 }
 
 
-// ===============================
-// INICIAR
-// ===============================
+// ==========================================
+// ESCUCHAR CAMBIOS DE SESIÓN
+// ==========================================
 
-document.addEventListener("DOMContentLoaded", () => {
-  checkSession();
-});
+supabaseClient.auth.onAuthStateChange(
+  (event, session) => {
+
+    if (session) {
+      console.log(
+        "Sesión iniciada:",
+        session.user.email
+      );
+    } else {
+      console.log("Sesión cerrada.");
+    }
+
+  }
+);
+
+
+// ==========================================
+// INICIAR PÁGINA
+// ==========================================
+
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+    checkSession();
+  }
+);
